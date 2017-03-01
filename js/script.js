@@ -12,7 +12,7 @@ function timeDifference(start,current) {
   return current - start;
 }
 
-function toReadabeTime(givenTime) {
+function toReadableTime(givenTime) {
   var time = givenTime;
 
   var ms = time % 1000;
