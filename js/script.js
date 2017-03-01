@@ -14,11 +14,22 @@ function timeDifference(start,current) {
 
 function toReadabeTime(givenTime) {
   var time = givenTime;
-  var milliseconds = (time%1000);
-  var centiseconds = milliseconds/10;
-  time -= milliseconds;
-  var seconds = (time%60000)/1000 || '00';
-  // var minutes = time%3600000;
-  // var hours =
-  return '00:' + seconds + ':' + centiseconds;
+
+  var ms = time % 1000;
+  time -= ms;
+  var secs = time % 60000;
+  time -= secs;
+  var mins = time % 3600000;
+  time -= mins;
+  var hrs = (time % 216000000) / 60;
+
+  var centiseconds = twoDigitPadding(ms / 10);
+  var seconds = twoDigitPadding(secs / 1000);
+  var minutes = twoDigitPadding(mins / 60000);
+
+  return minutes + ':' + seconds + ':' + centiseconds;
+}
+
+function twoDigitPadding(number) {
+  return ('00' + number).substr(-2, 2);
 }
