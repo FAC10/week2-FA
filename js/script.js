@@ -3,7 +3,14 @@ function getTime() {
 }
 
 function startTiming() {
-  stopwatch.startTime = getTime();
+  if (!stopwatch.hasOwnProperty('startTime')) { // ADD TESTING
+    stopwatch.startTime = getTime();
+  }
+  delete stopwatch.stopTime; // ADD TESTING
+}
+
+function stopTiming() {
+  stopwatch.stopTime = getTime();
 }
 
 var stopwatch = {};
@@ -27,9 +34,34 @@ function toReadableTime(givenTime) {
   var seconds = twoDigitPadding(secs / 1000);
   var minutes = twoDigitPadding(mins / 60000);
 
-  return minutes + ':' + seconds + ':' + centiseconds;
+  return minutes + ':' + seconds + '.' + centiseconds;
 }
 
 function twoDigitPadding(number) {
   return ('00' + number).substr(-2, 2);
 }
+
+// NEEDS TESTING BELOW
+
+function replaceDomElementContent(text, element) {
+  element.innerText = text;
+}
+
+function get(element) {
+  return document.getElementById(element);
+}
+
+get('start').addEventListener('click', startTiming);
+get('stop').addEventListener('click', stopTiming);
+
+setInterval(function () {
+  if(stopwatch.hasOwnProperty('startTime')) {
+    if(stopwatch.hasOwnProperty('stopTime')) {
+      replaceDomElementContent(
+        toReadableTime(timeDifference(stopwatch.startTime, stopwatch.stopTime)),
+        get('display'));
+    } else {
+      replaceDomElementContent(toReadableTime(timeDifference(stopwatch.startTime, getTime())), get('display'));
+    }
+  }
+}, 10);
