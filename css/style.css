@@ -1,0 +1,14 @@
+.stopwatch {
+  width: 500px;
+}
+
+.stopwatch__display {
+  border: 1px solid black;
+  width: 500px;
+  height: 100px;
+  font-size: 70px;
+}
+
+.stopwatch__button {
+
+}
