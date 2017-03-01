@@ -1,6 +1,5 @@
 function getTime() {
-  var date = new Date();
-  return date.getTime();
+  return Date.now();
 }
 
 function startTiming() {
@@ -8,3 +7,7 @@ function startTiming() {
 }
 
 var stopwatch = {};
+
+function timeDifference(start,current) {
+  return current-start;
+}
