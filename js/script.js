@@ -23,7 +23,7 @@ function toReadabeTime(givenTime) {
   time -= mins;
   var hrs = (time % 216000000) / 60;
 
-  var centiseconds = twoDigitPadding(ms / 10);
+  var centiseconds = twoDigitPadding(Math.floor(ms / 10));
   var seconds = twoDigitPadding(secs / 1000);
   var minutes = twoDigitPadding(mins / 60000);
 
