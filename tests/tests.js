@@ -5,8 +5,7 @@ test('create working getTime function', function(assert) {
 
 test('getTime function to get the time', (assert) => {
   var result = getTime();
-  var date = new Date();
-  var expected = date.getTime();
+  var expected = Date.now();
   assert.equal(result, expected);
 });
 
@@ -21,8 +20,14 @@ test('onclick startTime', (assert) => {
   assert.ok(result.startTime);
 });
 
-test('add current time in a readable format to DOM with currentTime function', (assert) => {
-  var result = currentTime(10000, 10500);
-  var expected = '00:00:50';
-  assert.equal(result, expected);
+test('calculate time difference', (assert) => {
+  var result = timeDifference(10000, 10500);
+  var expected = 500;
+  assert.equal(result,expected);
 });
+
+// test('add current time in a readable format to DOM with currentTime function', (assert) => {
+//   var result = currentTime(10000, 10500);
+//   var expected = '00:00:50';
+//   assert.equal(result, expected);
+// });
