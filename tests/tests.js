@@ -37,3 +37,9 @@ test('add current time in a readable format to DOM with currentTime function', (
   var expected = '00:10:50';
   assert.equal(result, expected);
 });
+
+test('add current time in a readable format to DOM with currentTime function', (assert) => {
+  var result = toReadabeTime(61500);
+  var expected = '00:10:50';
+  assert.equal(result, expected);
+});
