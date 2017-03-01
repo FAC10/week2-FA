@@ -9,5 +9,9 @@ function startTiming() {
 var stopwatch = {};
 
 function timeDifference(start,current) {
-  return current-start;
+  return current - start;
+}
+
+function toReadabeTime(time) {
+  return '00:00:' + (time / 10);
 }
