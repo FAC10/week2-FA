@@ -2,15 +2,20 @@ function getTime() {
   return Date.now();
 }
 
-function startTiming() {
-  if (!stopwatch.hasOwnProperty('startTime')) { // ADD TESTING
+function startTiming() { //TEST THIS
+  if (!stopwatch.hasOwnProperty('startTime')) {
     stopwatch.startTime = getTime();
+  }
+  if (stopwatch.hasOwnProperty('stopTime')) {
+    stopwatch.startTime = getTime() - timeDifference(stopwatch.startTime, stopwatch.stopTime);
   }
   delete stopwatch.stopTime; // ADD TESTING
 }
 
-function stopTiming() {
-  stopwatch.stopTime = getTime();
+function stopTiming() { //TEST THIS
+  if (!stopwatch.hasOwnProperty('stopTime')) {
+    stopwatch.stopTime = getTime();
+  }
 }
 
 var stopwatch = {};
@@ -41,14 +46,21 @@ function twoDigitPadding(number) {
   return ('00' + number).substr(-2, 2);
 }
 
-// NEEDS TESTING BELOW
+function setTime(start, end) {
+  if (start > end) { throw 'start time is after end time'; }
+  return toReadableTime(timeDifference(start, end));
+}
+
+//test below
 
 function replaceDomElementContent(text, element) {
   element.innerText = text;
 }
 
 function get(element) {
-  return document.getElementById(element);
+  if (element) {
+    return document.getElementById(element);
+  }
 }
 
 get('start').addEventListener('click', startTiming);
@@ -58,10 +70,10 @@ setInterval(function () {
   if(stopwatch.hasOwnProperty('startTime')) {
     if(stopwatch.hasOwnProperty('stopTime')) {
       replaceDomElementContent(
-        toReadableTime(timeDifference(stopwatch.startTime, stopwatch.stopTime)),
+        setTime(stopwatch.startTime, stopwatch.stopTime),
         get('display'));
     } else {
-      replaceDomElementContent(toReadableTime(timeDifference(stopwatch.startTime, getTime())), get('display'));
+      replaceDomElementContent(setTime(stopwatch.startTime, getTime()), get('display'));
     }
   }
 }, 10);

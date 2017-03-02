@@ -63,3 +63,12 @@ test('check value topping and above the max value of the stopwatch', (assert) =>
   expected = '00:00.00';
   assert.equal(result,expected,'1 hour');
 });
+
+
+module('setTime');
+test('check that setTime correctly inteprets the difference between two time values and outputs a human readable result', (assert) => {
+  var result = setTime(100, 600);
+  var expected = '00:00.50';
+  assert.equal(result,expected,'100 and 600 milliseconds as inputs');
+  assert.throws(() => setTime(600, 100), (err) => err.toString() === 'start time is after end time', 'start time is after end time' );
+});
