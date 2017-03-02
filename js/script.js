@@ -47,6 +47,12 @@ function toReadableTime(givenTime) {
   return minutes + ':' + seconds + '.' + centiseconds;
 }
 
+function getHours(ms) {
+  if (Math.floor((ms % 216000000)/3600000) > 0) console.log("yeah!");
+    return Math.floor((ms % 216000000)/3600000);
+
+}
+
 function twoDigitPadding(number) {
   return ('00' + number).substr(-2, 2);
 }
@@ -72,10 +78,16 @@ function addTimeToDom() {
 
   if (stopwatch.hasOwnProperty('startTime')) {
     if(stopwatch.hasOwnProperty('stopTime')) {
+      if (getHours()) {
+          replaceDomElementContent(setTime(stopwatch.startTime, getTime()), get('hourdisplay'));
+      }
       replaceDomElementContent(
         setTime(stopwatch.startTime, stopwatch.stopTime),
         get('display'));
     } else {
+      if (getHours()) {
+          replaceDomElementContent(setTime(stopwatch.startTime, getTime()), get('hourdisplay'));
+      }
       replaceDomElementContent(setTime(stopwatch.startTime, getTime()), get('display'));
     }
   } else {
