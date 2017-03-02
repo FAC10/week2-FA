@@ -166,3 +166,24 @@ test('manipulate the dom to show hours', (assert) => {
   var expected = '1:';
   assert.equal(result, expected);
 });
+test('manipulate the dom to show without stop time', (assert) => {
+  stopwatch = { startTime:getTime() - 3600000 };
+  addTimeToDom();
+  var result = document.getElementById('hourdisplay').innerText;
+  var expected = '1:';
+  assert.equal(result, expected);
+});
+
+module('createLapElement');
+test('createLapElement makes a human readable lap element', (assert) => {
+  var result = createLapElement(0, 500, 'testing').innerText;
+  var expected = document.getElementById('laptest').innerText;
+  assert.equal(result, expected);
+});
+
+module('addLap');
+test('adds a createLapElement to the Dom if no stop time', (assert) => {
+  stopwatch = { startTime:500 };
+  addLap();
+  assert.ok(document.getElementsByClassName('lap'));
+});

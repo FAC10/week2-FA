@@ -95,9 +95,9 @@ function addTimeToDom() {
   }
 }
 
-function getLapElement(start, end) {
+function createLapElement(start, end, className) {
   var lap = document.createElement('div');
-  lap.className += 'lap';
+  lap.className += className || 'lap';
   var lapNumber = document.getElementsByClassName('lap').length + 1;
   var hour = setHours(start, end);
   hour = hour ? hour + ":" : '';
@@ -107,7 +107,7 @@ function getLapElement(start, end) {
 
 function addLap() {
   if (hasStart(stopwatch) && !hasStop(stopwatch)) {
-    var lap = getLapElement(stopwatch.startTime, getTime());
+    var lap = createLapElement(stopwatch.startTime, getTime());
     document.getElementById('lapcontainer').appendChild(lap);
   }
 }
