@@ -104,3 +104,10 @@ test('resetTime correctly resets the stopwatch object', (assert) => {
   var expected = {};
   assert.deepEqual(result, expected);
 });
+
+test('resetTime correctly reset the display' ,(assert) => {
+  document.getElementById('display').innerText = '11:11.11';
+  resetTime();
+  var result = '00:00.00';
+  assert.ok(result === document.getElementById('display').innerText);
+})

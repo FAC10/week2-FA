@@ -17,6 +17,12 @@ function stopTiming() { //TEST THIS
     stopwatch.stopTime = getTime();
   }
 }
+ function resetTime () {
+  if (stopwatch.hasOwnProperty('stopTime')) {
+    delete stopwatch.stopTime;
+    stopwatch = {};
+  }
+ }
 
 var stopwatch = {};
 
@@ -65,6 +71,7 @@ function get(element) {
 
 get('start').addEventListener('click', startTiming);
 get('stop').addEventListener('click', stopTiming);
+get ('reset').addEventListener('click', resetTime);
 
 setInterval(function () {
   if(stopwatch.hasOwnProperty('startTime')) {
