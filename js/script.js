@@ -51,8 +51,6 @@ function setTime(start, end) {
   return toReadableTime(timeDifference(start, end));
 }
 
-//test below
-
 function replaceDomElementContent(text, element) {
   element.innerText = text;
 }
@@ -61,11 +59,9 @@ function get(element) {
   if (element) {
     return document.getElementById(element);
   }
- this.replaceElement = function (text) {
-  element.innerText = text;
-};
 }
 
+//Test below here
 
 get('start').addEventListener('click', startTiming);
 get('stop').addEventListener('click', stopTiming);
