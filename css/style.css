@@ -23,9 +23,15 @@ body {
   margin: auto auto;
   }
 
-.stopwatch__hour {
+.stopwatch__hours {
   position: absolute;
-
+  top: 143px;
+  left: 133px;
+  font-size: 45px;
+  font-family: 'threefourtwotwo';
+  font-weight: normal;
+  font-style: normal;
+  color: #0f0;
 }
 
 .stopwatch__display {
@@ -46,8 +52,12 @@ border: 2px solid #fff;
 /*margin-bottom: 3px;*/
 }
 
-#hourdisplay {
-
+.lap {
+  color: #0f0;
+  font-family: 'threefourtwotwo';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 35px;
 }
 
 #start {
