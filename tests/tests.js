@@ -72,3 +72,17 @@ test('check that setTime correctly inteprets the difference between two time val
   assert.equal(result,expected,'100 and 600 milliseconds as inputs');
   assert.throws(() => setTime(600, 100), (err) => err.toString() === 'start time is after end time', 'start time is after end time' );
 });
+
+module('setTime');
+test('check that get function gets an element', (assert) => {
+  var result = get('display')
+  var expected = document.getElementById('display');
+  assert.equal(result,expected, 'get is getting the display');
+});
+
+test('check that function get has a method replaceContent()', (assert) => {
+  get('test').replaceContent('test passed');
+  var result = document.getElementById('test').innerText;
+  var expected = 'test passed';
+  assert.equal(result,expected, ' get method replaceContent() is replacing the text of the display element');
+});

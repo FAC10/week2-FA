@@ -61,7 +61,11 @@ function get(element) {
   if (element) {
     return document.getElementById(element);
   }
+ this.replaceElement = function (text) {
+  element.innerText = text;
+};
 }
+
 
 get('start').addEventListener('click', startTiming);
 get('stop').addEventListener('click', stopTiming);
