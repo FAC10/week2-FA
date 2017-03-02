@@ -75,7 +75,7 @@ test('check that setTime correctly inteprets the difference between two time val
 
 module('get');
 test('check that get function gets an element', (assert) => {
-  var result = get('display')
+  var result = get('display');
   var expected = document.getElementById('display');
   assert.equal(result,expected, 'get is getting the display');
 });
@@ -96,18 +96,39 @@ test('check that get function gets an element', (assert) => {
   assert.equal(result,expected, 'replace is correctly replacing the content in a test element');
 });
 
-module('resetTime');
-test('resetTime correctly resets the stopwatch object', (assert) => {
-  stopwatch = { startTime:123, stopTime:12345 };
-  resetTime();
-  var result = stopwatch;
-  var expected = {};
-  assert.deepEqual(result, expected);
+module('stopTiming');
+test('check stopTiming adds a stopTime variable to stopwatch ONLY when the timer has been started', (assert) => {
+  stopwatch = { };
+  stopTiming();
+  assert.ok(!stopwatch.hasOwnProperty('stopTime'));
 });
 
-test('resetTime correctly reset the display' ,(assert) => {
-  document.getElementById('display').innerText = '11:11.11';
+test('when startTime exists stopTiming adds a stop time', (assert) => {
+  stopwatch = { startTime:123 };
+  stopTiming();
+  assert.ok(stopwatch.hasOwnProperty('stopTime'));
+});
+
+module('resetTime');
+test('resetTime correctly resets the stopwatch object', (assert) => {
+  stopwatch = { startTime:123, stopTime:12345, lapTime:12345 };
   resetTime();
+  assert.ok(!stopwatch.hasOwnProperty('startTime'));
+  assert.ok(!stopwatch.hasOwnProperty('stopTime'));
+});
+
+test('resetTime correctly resets the display', (assert) => {
+  document.getElementById('display').innerText = '11:11.11'; //Add a value to the display to check against
+  stopwatch.stopTime = 1100; //resetTime requires a stopTime
+  resetTime();
+  addTimeToDom();
   var result = '00:00.00';
   assert.ok(result === document.getElementById('display').innerText);
-})
+});
+
+module('getHours');
+test('returns hours if they exist', (assert) => {
+  var result = getHours(3600000);
+  var expected = '1';
+  assert.equal(result, expected);
+});

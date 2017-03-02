@@ -13,14 +13,15 @@ function startTiming() { //TEST THIS
 }
 
 function stopTiming() { //TEST THIS
-  if (!stopwatch.hasOwnProperty('stopTime')) {
+  if (!stopwatch.hasOwnProperty('stopTime') && stopwatch.hasOwnProperty('startTime')) {
     stopwatch.stopTime = getTime();
   }
 }
+
  function resetTime () {
   if (stopwatch.hasOwnProperty('stopTime')) {
     delete stopwatch.stopTime;
-    stopwatch = {};
+    delete stopwatch.startTime;
   }
  }
 
@@ -38,8 +39,6 @@ function toReadableTime(givenTime) {
   var secs = time % 60000;
   time -= secs;
   var mins = time % 3600000;
-  time -= mins;
-  var hrs = (time % 216000000) / 60;
 
   var centiseconds = twoDigitPadding(Math.floor(ms / 10));
   var seconds = twoDigitPadding(secs / 1000);
@@ -68,13 +67,10 @@ function get(element) {
 }
 
 //Test below here
+function addTimeToDom() {
+  // if ()
 
-get('start').addEventListener('click', startTiming);
-get('stop').addEventListener('click', stopTiming);
-get ('reset').addEventListener('click', resetTime);
-
-setInterval(function () {
-  if(stopwatch.hasOwnProperty('startTime')) {
+  if (stopwatch.hasOwnProperty('startTime')) {
     if(stopwatch.hasOwnProperty('stopTime')) {
       replaceDomElementContent(
         setTime(stopwatch.startTime, stopwatch.stopTime),
@@ -82,5 +78,13 @@ setInterval(function () {
     } else {
       replaceDomElementContent(setTime(stopwatch.startTime, getTime()), get('display'));
     }
+  } else {
+    replaceDomElementContent(setTime(0, 0), get('display'));
   }
-}, 10);
+}
+
+get('start').addEventListener('click', startTiming);
+get('stop').addEventListener('click', stopTiming);
+get('reset').addEventListener('click', resetTime);
+
+setInterval(addTimeToDom, 10);
