@@ -64,6 +64,24 @@ test('check value topping and above the max value of the stopwatch', (assert) =>
   assert.equal(result,expected,'1 hour');
 });
 
+module('hasStart and hasStop');
+test('check if obj has a startTime prop', (assert) => {
+  test = {startTime:10};
+  assert.ok(hasStart(test), 'arg obj has the prop');
+});
+test('check if obj has a startTime prop', (assert) => {
+  test = {};
+  assert.ok(!hasStart(test), 'arg obj doesnt have the prop');
+});
+test('check if obj has a stopTime prop', (assert) => {
+  test = {stopTime:10};
+  assert.ok(hasStop(test), 'arg obj has the prop');
+});
+test('check if obj has a stopTime prop', (assert) => {
+  test = {};
+  assert.ok(!hasStop(test), 'arg obj doesnt have the prop');
+});
+
 
 module('setTime');
 test('check that setTime correctly inteprets the difference between two time values and outputs a human readable result', (assert) => {
@@ -79,13 +97,6 @@ test('check that get function gets an element', (assert) => {
   var expected = document.getElementById('display');
   assert.equal(result,expected, 'get is getting the display');
 });
-
-// test('check that function get has a method replaceContent()', (assert) => {
-//   get('test').replaceContent('test passed');
-//   var result = document.getElementById('test').innerText;
-//   var expected = 'test passed';
-//   assert.equal(result,expected, ' get method replaceContent() is replacing the text of the display element');
-// });
 
 module('replaceDomElementContent');
 test('check that get function gets an element', (assert) => {
@@ -130,5 +141,28 @@ module('getHours');
 test('returns hours if they exist', (assert) => {
   var result = getHours(3600000);
   var expected = '1';
+  assert.equal(result, expected);
+});
+
+module('setHours');
+test('Checks if the difference between two times is above an hour', (assert) => {
+  var result = setHours(3600000, 7200000); // two hours
+  var expected = '1';
+  assert.equal(result, expected);
+});
+
+module('addTimeToDom');
+test('manipulate the dom to show time', (assert) => {
+  stopwatch = { startTime:0, stopTime:500 };
+  addTimeToDom();
+  var result = document.getElementById('display').innerText;
+  var expected = '00:00.50';
+  assert.equal(result, expected);
+});
+test('manipulate the dom to show hours', (assert) => {
+  stopwatch = { startTime:0, stopTime:3600000 };
+  addTimeToDom();
+  var result = document.getElementById('hourdisplay').innerText;
+  var expected = '1:';
   assert.equal(result, expected);
 });
