@@ -48,9 +48,7 @@ function toReadableTime(givenTime) {
 }
 
 function getHours(ms) {
-  if (Math.floor((ms % 216000000)/3600000) > 0) console.log("yeah!");
     return Math.floor((ms % 216000000)/3600000);
-
 }
 
 function twoDigitPadding(number) {
@@ -60,6 +58,10 @@ function twoDigitPadding(number) {
 function setTime(start, end) {
   if (start > end) { throw 'start time is after end time'; }
   return toReadableTime(timeDifference(start, end));
+}
+
+function setHours (start, end) {
+  return getHours(timeDifference(start, end));
 }
 
 function replaceDomElementContent(text, element) {
@@ -74,19 +76,17 @@ function get(element) {
 
 //Test below here
 function addTimeToDom() {
-  // if ()
-
   if (stopwatch.hasOwnProperty('startTime')) {
     if(stopwatch.hasOwnProperty('stopTime')) {
-      if (getHours()) {
-          replaceDomElementContent(setTime(stopwatch.startTime, getTime()), get('hourdisplay'));
+      if (setHours(stopwatch.startTime, stopwatch.stopTime)) {
+        replaceDomElementContent(setHours(stopwatch.startTime, stopwatch.stopTime) + ":", get('hourdisplay'));
       }
       replaceDomElementContent(
         setTime(stopwatch.startTime, stopwatch.stopTime),
         get('display'));
     } else {
-      if (getHours()) {
-          replaceDomElementContent(setTime(stopwatch.startTime, getTime()), get('hourdisplay'));
+      if (setHours(stopwatch.startTime, getTime())) {
+        replaceDomElementContent(setHours(stopwatch.startTime, getTime()) + ":", get('hourdisplay'));
       }
       replaceDomElementContent(setTime(stopwatch.startTime, getTime()), get('display'));
     }
