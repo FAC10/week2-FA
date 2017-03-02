@@ -13,10 +13,17 @@ function startTiming() { //TEST THIS
 }
 
 function stopTiming() { //TEST THIS
-  if (!stopwatch.hasOwnProperty('stopTime')) {
+  if (!stopwatch.hasOwnProperty('stopTime') && stopwatch.hasOwnProperty('startTime')) {
     stopwatch.stopTime = getTime();
   }
 }
+
+ function resetTime () {
+  if (stopwatch.hasOwnProperty('stopTime')) {
+    delete stopwatch.stopTime;
+    delete stopwatch.startTime;
+  }
+ }
 
 var stopwatch = {};
 
@@ -32,14 +39,16 @@ function toReadableTime(givenTime) {
   var secs = time % 60000;
   time -= secs;
   var mins = time % 3600000;
-  time -= mins;
-  var hrs = (time % 216000000) / 60;
 
   var centiseconds = twoDigitPadding(Math.floor(ms / 10));
   var seconds = twoDigitPadding(secs / 1000);
   var minutes = twoDigitPadding(mins / 60000);
 
   return minutes + ':' + seconds + '.' + centiseconds;
+}
+
+function getHours(ms) {
+    return Math.floor((ms % 216000000)/3600000);
 }
 
 function twoDigitPadding(number) {
@@ -51,7 +60,9 @@ function setTime(start, end) {
   return toReadableTime(timeDifference(start, end));
 }
 
-//test below
+function setHours (start, end) {
+  return getHours(timeDifference(start, end));
+}
 
 function replaceDomElementContent(text, element) {
   element.innerText = text;
@@ -63,17 +74,29 @@ function get(element) {
   }
 }
 
-get('start').addEventListener('click', startTiming);
-get('stop').addEventListener('click', stopTiming);
-
-setInterval(function () {
-  if(stopwatch.hasOwnProperty('startTime')) {
+//Test below here
+function addTimeToDom() {
+  if (stopwatch.hasOwnProperty('startTime')) {
     if(stopwatch.hasOwnProperty('stopTime')) {
+      if (setHours(stopwatch.startTime, stopwatch.stopTime)) {
+        replaceDomElementContent(setHours(stopwatch.startTime, stopwatch.stopTime) + ":", get('hourdisplay'));
+      }
       replaceDomElementContent(
         setTime(stopwatch.startTime, stopwatch.stopTime),
         get('display'));
     } else {
+      if (setHours(stopwatch.startTime, getTime())) {
+        replaceDomElementContent(setHours(stopwatch.startTime, getTime()) + ":", get('hourdisplay'));
+      }
       replaceDomElementContent(setTime(stopwatch.startTime, getTime()), get('display'));
     }
+  } else {
+    replaceDomElementContent(setTime(0, 0), get('display'));
   }
-}, 10);
+}
+
+get('start').addEventListener('click', startTiming);
+get('stop').addEventListener('click', stopTiming);
+get('reset').addEventListener('click', resetTime);
+
+setInterval(addTimeToDom, 10);

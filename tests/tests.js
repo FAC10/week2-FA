@@ -72,3 +72,63 @@ test('check that setTime correctly inteprets the difference between two time val
   assert.equal(result,expected,'100 and 600 milliseconds as inputs');
   assert.throws(() => setTime(600, 100), (err) => err.toString() === 'start time is after end time', 'start time is after end time' );
 });
+
+module('get');
+test('check that get function gets an element', (assert) => {
+  var result = get('display');
+  var expected = document.getElementById('display');
+  assert.equal(result,expected, 'get is getting the display');
+});
+
+// test('check that function get has a method replaceContent()', (assert) => {
+//   get('test').replaceContent('test passed');
+//   var result = document.getElementById('test').innerText;
+//   var expected = 'test passed';
+//   assert.equal(result,expected, ' get method replaceContent() is replacing the text of the display element');
+// });
+
+module('replaceDomElementContent');
+test('check that get function gets an element', (assert) => {
+  var element = document.getElementById('test');
+  replaceDomElementContent('test passed', element);
+  var result = element.innerText;
+  var expected = element.innerText;
+  assert.equal(result,expected, 'replace is correctly replacing the content in a test element');
+});
+
+module('stopTiming');
+test('check stopTiming adds a stopTime variable to stopwatch ONLY when the timer has been started', (assert) => {
+  stopwatch = { };
+  stopTiming();
+  assert.ok(!stopwatch.hasOwnProperty('stopTime'));
+});
+
+test('when startTime exists stopTiming adds a stop time', (assert) => {
+  stopwatch = { startTime:123 };
+  stopTiming();
+  assert.ok(stopwatch.hasOwnProperty('stopTime'));
+});
+
+module('resetTime');
+test('resetTime correctly resets the stopwatch object', (assert) => {
+  stopwatch = { startTime:123, stopTime:12345, lapTime:12345 };
+  resetTime();
+  assert.ok(!stopwatch.hasOwnProperty('startTime'));
+  assert.ok(!stopwatch.hasOwnProperty('stopTime'));
+});
+
+test('resetTime correctly resets the display', (assert) => {
+  document.getElementById('display').innerText = '11:11.11'; //Add a value to the display to check against
+  stopwatch.stopTime = 1100; //resetTime requires a stopTime
+  resetTime();
+  addTimeToDom();
+  var result = '00:00.00';
+  assert.ok(result === document.getElementById('display').innerText);
+});
+
+module('getHours');
+test('returns hours if they exist', (assert) => {
+  var result = getHours(3600000);
+  var expected = '1';
+  assert.equal(result, expected);
+});

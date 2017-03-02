@@ -20,8 +20,14 @@ Write tests for every component of the stopwatch.
 
 1. getTime - create working getTime function
 1. stopwatch object - create stopwatch time storage object
-1. startTime - function to add a start tie to the stopwatch object
-1. timeDifference - add a function to check the difference in time between a start time and another
+1. startTime - function to add a start time to the stopwatch object
+1. timeDifference - add a function to check the difference in time between given start and end
 1. toReadableTime - create a function that changes milliseconds to readable time and resets to zero every hour.
 1. readableTimeToTextNode - return a textnode with a readable time string
-1. pushToDisplay - add to display 
+1. pushToDisplay - add to display
+
+
+
+### tests
+
+We didn't apply tests to native javascript methods and functions (addEventListener, etc.) - just the connected functions and inputs. This simplified our testing process a bunch because we didn't have to worry about async testingHODF852
