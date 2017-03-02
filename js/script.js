@@ -1,25 +1,25 @@
-function getTime() {
-  return Date.now();
-}
+function getTime() { return Date.now(); }
+function hasStart (obj) { return obj.hasOwnProperty('startTime'); }
+function hasStop (obj) { return obj.hasOwnProperty('stopTime'); }
 
-function startTiming() { //TEST THIS
-  if (!stopwatch.hasOwnProperty('startTime')) {
+function startTiming() {
+  if (!hasStart(stopwatch)) {
     stopwatch.startTime = getTime();
   }
-  if (stopwatch.hasOwnProperty('stopTime')) {
+  if (hasStop(stopwatch)) {
     stopwatch.startTime = getTime() - timeDifference(stopwatch.startTime, stopwatch.stopTime);
   }
-  delete stopwatch.stopTime; // ADD TESTING
+  delete stopwatch.stopTime;
 }
 
-function stopTiming() { //TEST THIS
-  if (!stopwatch.hasOwnProperty('stopTime') && stopwatch.hasOwnProperty('startTime')) {
+function stopTiming() {
+  if (!hasStop(stopwatch) && hasStart(stopwatch)) {
     stopwatch.stopTime = getTime();
   }
 }
 
  function resetTime () {
-  if (stopwatch.hasOwnProperty('stopTime')) {
+  if (hasStop(stopwatch)) {
     delete stopwatch.stopTime;
     delete stopwatch.startTime;
   }
@@ -76,8 +76,8 @@ function get(element) {
 
 //Test below here
 function addTimeToDom() {
-  if (stopwatch.hasOwnProperty('startTime')) {
-    if(stopwatch.hasOwnProperty('stopTime')) {
+  if (hasStart(stopwatch)) {
+    if(hasStop(stopwatch)) {
       if (setHours(stopwatch.startTime, stopwatch.stopTime)) {
         replaceDomElementContent(setHours(stopwatch.startTime, stopwatch.stopTime) + ":", get('hourdisplay'));
       }
@@ -95,8 +95,26 @@ function addTimeToDom() {
   }
 }
 
+function createLapElement(start, end, className) {
+  var lap = document.createElement('div');
+  lap.className += className || 'lap';
+  var lapNumber = document.getElementsByClassName('lap').length + 1;
+  var hour = setHours(start, end);
+  hour = hour ? hour + ":" : '';
+  lap.innerText = "Lap number " + lapNumber + " " + hour + setTime(start, end);
+  return lap;
+}
+
+function addLap() {
+  if (hasStart(stopwatch) && !hasStop(stopwatch)) {
+    var lap = createLapElement(stopwatch.startTime, getTime());
+    document.getElementById('lapcontainer').appendChild(lap);
+  }
+}
+
 get('start').addEventListener('click', startTiming);
 get('stop').addEventListener('click', stopTiming);
 get('reset').addEventListener('click', resetTime);
+get('lap').addEventListener('click', addLap);
 
 setInterval(addTimeToDom, 10);
