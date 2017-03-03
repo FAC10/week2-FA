@@ -22,8 +22,12 @@ function stopTiming() {
   if (hasStop(stopwatch)) {
     delete stopwatch.stopTime;
     delete stopwatch.startTime;
+    var laps = [].slice.call(document.getElementsByClassName('lap'));
+    laps.forEach(function (lap) {
+      lap.parentElement.removeChild(lap);
+    });
   }
- }
+}
 
 var stopwatch = {};
 
@@ -31,9 +35,7 @@ function timeDifference(start,current) {
   return current - start;
 }
 
-function toReadableTime(givenTime) {
-  var time = givenTime;
-
+function toReadableTime(time) {
   var ms = time % 1000;
   time -= ms;
   var secs = time % 60000;
@@ -74,23 +76,13 @@ function get(element) {
   }
 }
 
-//Test below here
 function addTimeToDom() {
-  if (hasStart(stopwatch)) {
-    if(hasStop(stopwatch)) {
-      if (setHours(stopwatch.startTime, stopwatch.stopTime)) {
-        replaceDomElementContent(setHours(stopwatch.startTime, stopwatch.stopTime) + ":", get('hourdisplay'));
-      }
-      replaceDomElementContent(
-        setTime(stopwatch.startTime, stopwatch.stopTime),
-        get('display'));
-    } else {
-      if (setHours(stopwatch.startTime, getTime())) {
-        replaceDomElementContent(setHours(stopwatch.startTime, getTime()) + ":", get('hourdisplay'));
-      }
-      replaceDomElementContent(setTime(stopwatch.startTime, getTime()), get('display'));
-    }
-  } else {
+  var hours = setHours(stopwatch.startTime, stopwatch.stopTime || getTime());
+  var clock = setTime(stopwatch.startTime, stopwatch.stopTime || getTime());
+  hours = hours ? hours + ":" : ''; // if hours display hours
+  replaceDomElementContent(hours, get('hourdisplay'));
+  replaceDomElementContent(clock, get('display'));
+  if (!hasStart(stopwatch)) { // if empty start then reset display to 0
     replaceDomElementContent(setTime(0, 0), get('display'));
   }
 }
