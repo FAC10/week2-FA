@@ -187,3 +187,11 @@ test('adds a createLapElement to the Dom if no stop time', (assert) => {
   addLap();
   assert.ok(document.getElementsByClassName('lap'));
 });
+
+module('reset laps on reset');
+test('adds a createLapElement to the Dom if no stop time', (assert) => {
+  stopwatch = { startTime:500 };
+  addLap();
+  resetTime();
+  assert.ok(!document.getElementsByClassName('lap'));
+});
