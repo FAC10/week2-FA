@@ -23,7 +23,9 @@ function stopTiming() {
     delete stopwatch.stopTime;
     delete stopwatch.startTime;
     var laps = [].slice.call(document.getElementsByClassName('lap'));
-    laps.forEach(function (lap) { lap.parentElement.removeChild(lap)});
+    laps.forEach(function (lap) {
+      lap.parentElement.removeChild(lap);
+    });
   }
 }
 
@@ -33,7 +35,7 @@ function timeDifference(start,current) {
   return current - start;
 }
 
-function toReadableTime(givenTime) {
+function toReadableTime(time) {
   var ms = time % 1000;
   time -= ms;
   var secs = time % 60000;
