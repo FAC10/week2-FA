@@ -22,8 +22,10 @@ function stopTiming() {
   if (hasStop(stopwatch)) {
     delete stopwatch.stopTime;
     delete stopwatch.startTime;
+    var laps = [].slice.call(document.getElementsByClassName('lap'));
+    laps.forEach(function (lap) { lap.parentElement.removeChild(lap)});
   }
- }
+}
 
 var stopwatch = {};
 
