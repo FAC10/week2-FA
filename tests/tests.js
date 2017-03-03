@@ -1,4 +1,4 @@
-test('getTime - create working getTime function', function(assert) {
+test('getTime - create working getTime function', (assert) => {
   var result = getTime();
   assert.ok(result, 'getTime function exists');
 
