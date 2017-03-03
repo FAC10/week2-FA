@@ -2,31 +2,17 @@ body {
   background-color: #000;
 }
 
-/*@font-face {
-    font-family: 'digital-7-mono';
-    src: url('./fonts/digital-7-mono.ttf') format('ttf');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'transponder';
-    src: url('./fonts/transponder.ttf') format('ttf');
-    font-weight: normal;
-    font-style: normal;
-}*/
-
 .stopwatch {
-  padding: 20vh;
+  padding: 200px;
   position:relative;
-  width: 500px;
+  width: 550px;
   margin: auto auto;
   }
 
 .stopwatch__hours {
   position: absolute;
-  top: 143px;
-  left: 133px;
+  top: 238px;
+  left: 255px;
   font-size: 45px;
   font-family: 'threefourtwotwo';
   font-weight: normal;
@@ -48,8 +34,9 @@ body {
 
 .stopwatch__button {
 border-radius: 3px;
-border: 2px solid #fff;
-/*margin-bottom: 3px;*/
+border: 1px solid #fff;
+color: #0f0;
+font-size: 18px;
 }
 
 .lap {
@@ -61,17 +48,17 @@ border: 2px solid #fff;
 }
 
 #start {
-  background-color: #0f0;
+  background-color: #000;
 }
 
 #stop {
-  background-color: #f00;
+  background-color: #000;
 }
 
 #reset {
-  background-color: #ff0;
+  background-color: #000;
 }
 
 #lap {
-  background-color: #00f;
+  background-color: #000;
 }
